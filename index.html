@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#dce9e4">
+  <title>Apple · 来学习</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><img class="brand-mark" src="assets/study-icon-v2-final.png" alt=""><span>来学习 <small>智能学习空间</small></span></div>
+      <nav aria-label="主导航">
+        <span class="nav-liquid" aria-hidden="true"></span>
+        <button class="nav-item active" data-view="today"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 10.5 12 4l7.5 6.5v8a1.5 1.5 0 0 1-1.5 1.5H6a1.5 1.5 0 0 1-1.5-1.5Z"/><path d="M9.5 20v-6h5v6"/></svg>今日</button>
+        <button class="nav-item" data-view="plan"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h10A2.5 2.5 0 0 1 19.5 6v14L12 16.5 4.5 20V6A2.5 2.5 0 0 1 7 3.5Z"/></svg>计划</button>
+        <button class="nav-item" data-view="todo"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><path d="m8 12 2.5 2.5L16 9"/></svg>待办</button>
+        <button class="nav-item" data-view="data"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V9m7 10V5m7 14v-7"/></svg>数据</button>
+      </nav>
+      <div class="privacy-note"><span>●</span> 数据仅保存在本机</div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div><p class="eyebrow" id="dateLabel"></p><h1 id="pageTitle">今日</h1></div>
+        <button class="avatar" aria-label="本地个人空间">A</button>
+      </header>
+
+      <section class="view active" id="todayView">
+        <div class="hero-card">
+          <div class="hero-copy">
+            <p class="eyebrow">今天只需要完成</p>
+            <h2 id="heroHeadline">先创建一个学习目标</h2>
+            <p class="muted" id="heroSubline">我会帮你把目标拆成可执行的每日任务。</p>
+          </div>
+          <div class="hero-orb" aria-hidden="true"></div>
+          <div class="progress-ring" id="progressRing"><strong id="progressPercent">0%</strong><span>已完成</span></div>
+        </div>
+
+        <div class="summary-row">
+          <div class="summary-card"><span>预计用时</span><strong id="todayMinutes">0 分钟</strong></div>
+          <div class="summary-card"><span>今日任务</span><strong id="todayCount">0 项</strong></div>
+          <div class="summary-card accent"><span>待复习</span><strong id="reviewCount">0 项</strong></div>
+        </div>
+
+        <section class="review-hub" id="reviewHub">
+          <div class="review-symbol" aria-hidden="true">↻</div>
+          <div class="review-copy"><p class="eyebrow">复习中心</p><h3 id="reviewTitle">复习会在这里出现</h3><p class="muted" id="reviewMeta">完成任务后，我会按掌握度安排下一次复习。</p></div>
+          <button class="secondary" id="reviewStart" disabled>暂无复习</button>
+        </section>
+
+        <div class="content-grid">
+          <section class="panel">
+            <div class="section-head"><div><p class="eyebrow">今日清单</p><h3>按计划往前走</h3></div><button class="text-button" id="addQuickTask">+ 添加</button></div>
+            <div id="todayTasks" class="task-list"></div>
+          </section>
+          <aside class="panel focus-panel">
+            <div class="focus-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg></div>
+            <p class="eyebrow">专注时间</p>
+            <div class="timer" id="timer">25:00</div>
+            <p class="muted" id="timerHint">一次只做一件事</p>
+            <div class="timer-presets" aria-label="专注时长">
+              <button class="timer-preset active" data-minutes="25">25</button>
+              <button class="timer-preset" data-minutes="45">45</button>
+              <button class="timer-preset" data-minutes="60">60</button>
+              <label class="timer-custom"><input id="timerCustom" type="number" min="5" max="180" placeholder="自定" aria-label="自定义专注分钟"><span>分</span></label>
+            </div>
+            <div class="timer-actions">
+              <button class="primary" id="timerToggle">开始专注</button>
+              <button class="icon-button" id="timerReset" aria-label="重置计时">↻</button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="view" id="planView">
+        <div class="section-head page-action"><div><p class="eyebrow">长期目标</p><h2>计划不是约束，是下一步</h2></div><button class="primary" id="newGoal">+ 新建目标</button></div>
+        <div id="recoveryBanner" class="recovery-banner hidden">
+          <div><strong>最近的计划有些拥挤</strong><p id="recoveryText">可以按你现在的节奏重新安排，不必追赶过去。</p></div>
+          <button class="secondary" id="recoverPlan">智能重排</button>
+        </div>
+        <section class="panel calendar-panel">
+          <div class="section-head calendar-head"><div><p class="eyebrow">周计划</p><h3 id="calendarRange">本周</h3></div><div class="calendar-actions"><button class="icon-button" id="prevWeek" aria-label="上一周">‹</button><button class="text-button" id="thisWeek">今天</button><button class="icon-button" id="nextWeek" aria-label="下一周">›</button></div></div>
+          <div class="week-calendar" id="weekCalendar"></div>
+        </section>
+        <section class="panel timetable-panel">
+          <div class="section-head timetable-head"><div><p class="eyebrow">近期计划表</p><h3 id="timetableRangeTitle">未来 7 天</h3></div><div class="timetable-actions"><div class="period-switch" role="group" aria-label="计划表范围"><button data-timetable-days="3">3 天</button><button class="active" data-timetable-days="7">7 天</button><button data-timetable-days="14">14 天</button></div><button class="primary" id="newEvent">+ 新建事件</button><button class="secondary" id="autoTimetable">自动排入</button></div></div>
+          <div class="timetable-unplanned hidden" id="timetableUnplanned"></div>
+          <div class="timetable-scroll"><div class="timetable" id="timetable"></div></div>
+          <p class="timetable-hint">拖动时间块即可调整日期和时间；冲突时不会覆盖原安排。</p>
+        </section>
+        <div id="goalList" class="goal-grid"></div>
+      </section>
+
+      <section class="view" id="todoView">
+        <div class="section-head page-action"><div><p class="eyebrow">所有任务</p><h2>每件事都有落点</h2></div><button class="primary" id="newTask">+ 新建待办</button></div>
+        <div class="filter-bar" role="group" aria-label="待办筛选">
+          <span class="filter-liquid" aria-hidden="true"></span>
+          <button class="filter active" data-filter="all">全部</button>
+          <button class="filter" data-filter="open">未完成</button>
+          <button class="filter" data-filter="done">已完成</button>
+        </div>
+        <section class="panel"><div id="allTasks" class="task-list"></div></section>
+      </section>
+
+      <section class="view" id="dataView">
+        <div class="section-head page-action"><div><p class="eyebrow">本周回顾</p><h2>看见进度，不审判状态</h2></div></div>
+        <div class="stats-grid">
+          <article class="stat-card"><span>学习时长</span><strong id="weekMinutes">0h 0m</strong><small>本周累计</small></article>
+          <article class="stat-card"><span>完成率</span><strong id="completionRate">0%</strong><small id="completionMeta">0 / 0 任务</small></article>
+          <article class="stat-card"><span>连续学习</span><strong id="streakDays">0 天</strong><small>保持小步前进</small></article>
+        </div>
+        <div class="content-grid data-grid">
+          <section class="panel"><div class="section-head"><div><p class="eyebrow">近 7 天</p><h3>投入时间</h3></div></div><div class="week-chart" id="weekChart"></div></section>
+          <section class="panel"><div class="section-head"><div><p class="eyebrow">计划健康度</p><h3>目标进展</h3></div></div><div id="goalHealth" class="health-list"></div></section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="goalDialog">
+    <form method="dialog" id="goalForm">
+      <div class="dialog-head"><div><p class="eyebrow" id="goalDialogEyebrow">新建学习目标</p><h2 id="goalDialogTitle">你想完成什么？</h2></div><button class="close-button" value="cancel" formnovalidate aria-label="关闭">×</button></div>
+      <label>目标名称<input name="title" required placeholder="例：完成英语四级复习"></label>
+      <div class="form-row">
+        <label>截止日期<input type="date" name="deadline" required></label>
+        <label>每天可学习<input type="number" name="dailyMinutes" min="10" max="480" value="60" required><span class="input-suffix">分钟</span></label>
+      </div>
+      <div class="form-row">
+        <label>当前基础<select name="level"><option>零基础</option><option selected>有一些基础</option><option>已系统学过</option></select></label>
+        <label>计划章节数<input type="number" name="chapters" min="1" max="120" value="12" required></label>
+      </div>
+      <label>优先级<select name="priority"><option value="high">高 · 不能延误</option><option value="medium" selected>中 · 稳定推进</option><option value="low">低 · 灵活安排</option></select></label>
+      <menu><button value="cancel" class="secondary" formnovalidate>取消</button><button value="default" class="primary" id="saveGoal">生成学习计划</button></menu>
+    </form>
+  </dialog>
+
+  <dialog id="taskDialog">
+    <form method="dialog" id="taskForm">
+      <div class="dialog-head"><div><p class="eyebrow" id="taskDialogEyebrow">新建待办</p><h2 id="taskDialogTitle">添加一个清晰的任务</h2></div><button class="close-button" value="cancel" formnovalidate aria-label="关闭">×</button></div>
+      <label><span id="taskNameLabel">任务名称</span><input name="title" required placeholder="例：阅读第 3 章"></label>
+      <div class="form-row"><label>日期<input type="date" name="date" required></label><label>预计用时<input type="number" name="minutes" min="5" max="480" value="30" required><span class="input-suffix">分钟</span></label></div>
+      <div class="form-row"><label>开始时间<input type="time" name="startTime" min="08:00" max="21:45" step="900"><small>留空则进入待安排</small></label><label>优先级<select name="priority"><option value="highest">最高</option><option value="high">高</option><option value="medium" selected>中</option><option value="low">低</option><option value="lowest">最低</option></select></label></div>
+      <label>所属目标<select name="goalId" id="taskGoalSelect"><option value="">普通待办</option></select></label>
+      <menu><button value="cancel" class="secondary" formnovalidate>取消</button><button value="default" class="primary" id="saveTask">添加任务</button></menu>
+    </form>
+  </dialog>
+
+  <dialog id="masteryDialog" class="mastery-dialog">
+    <form method="dialog">
+      <div class="mastery-mark" aria-hidden="true">✓</div>
+      <p class="eyebrow">完成反馈</p>
+      <h2>这次掌握得怎么样？</h2>
+      <p class="muted" id="masteryTaskTitle"></p>
+      <div class="mastery-options">
+        <button type="button" data-mastery="mastered"><strong>掌握了</strong><span>7 天后复习</span></button>
+        <button type="button" data-mastery="fuzzy"><strong>有点模糊</strong><span>3 天后复习</span></button>
+        <button type="button" data-mastery="relearn"><strong>需要重学</strong><span>明天再学习</span></button>
+      </div>
+      <button class="text-button mastery-cancel" value="cancel">暂不完成</button>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
