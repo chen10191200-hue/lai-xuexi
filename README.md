@@ -9,7 +9,7 @@
 需要 macOS 13 或更高版本及 Xcode Command Line Tools。
 
 ```bash
-./build-app.command
+zsh build-app.command
 open 来学习.app
 ```
 
@@ -18,4 +18,3 @@ open 来学习.app
 ## 许可证
 
 [MIT](LICENSE)
-
